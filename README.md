@@ -26,3 +26,5 @@ chmod +x ArchSetup/utils/*.sh
 ```bash
 sudo ./main.sh
 ```
+
+### **NOTE: NU FUNȚIONEAZĂ!**
