@@ -2,12 +2,12 @@
 
 mount_partitions() {
   echo "Setting up Btrfs..."
-  mount "${dev}3" /mnt
+  mount "${dev}p3" /mnt
   mkdir -p /mnt/{boot,home,.snapshots}
-  mount "${dev}1" /mnt/boot
+  mount "${dev}p1" /mnt/boot
 
   # Montare subvolume Btrfs
-  mount -o noatime,space_cache,compress=zstd,subvol=@ "${dev}3" /mnt
-  mount -o noatime,space_cache,compress=zstd,subvol=@home "${dev}3" /mnt/home
-  mount -o noatime,space_cache,compress=zstd,subvol=@snapshots "${dev}3" /mnt/.snapshots
+  mount -o noatime,space_cache,compress=zstd,subvol=@ "${dev}p3" /mnt
+  mount -o noatime,space_cache,compress=zstd,subvol=@home "${dev}p3" /mnt/home
+  mount -o noatime,space_cache,compress=zstd,subvol=@snapshots "${dev}p3" /mnt/.snapshots
 }
