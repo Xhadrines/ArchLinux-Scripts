@@ -55,7 +55,7 @@ In acest fisier introdu urmatoarele:
 
 passwd
 
-pacman -S efibootmgr
+sudo pacman -S efibootmgr
 
 bootctl install
 
@@ -77,19 +77,41 @@ options root=/dev/nvme0n1p3 rw
 
 sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm
 
-sudo pacman -S xf86-video-amdgpu
+sudo pacman -S xf86-video-amdgpu vulkan-radeon
 
-sudo pacman -S nvidia nvidia-utils nvidia-settings
+sudo pacman -S nvidia nvidia-utils nvidia-settings nvidia-prime
 
-pacman -S vulkan-radeon
+sudo pacman -S tlp tlp-rdw smartmontools ethtool
+
+sudo pacman -S pipewire pipewire-pulse pipewire-alsa pipewire-jack
+
+vim /etc/tlp.conf
+
+In acest fisier decomenteaza "DEVICES_TO_DISABLE_ON_STARTUP"
+
+sudo tlp start
+
+systemctl --user enable --now pipewire
+
+systemctl enable tlp
+
+systemctl mask power-profiles-deamon.service
+
+systemctl mask systemd-rfkill.service
+
+systemctl mask systemd-rfkill.socket
+
+systemctl enable tlp
 
 systemctl enable gdm.service
 
 systemctl enable gdm
 
-pacman -S networkmanager
+sudo pacman -S networkmanager bluez bluez-utils
 
 systemctl enable NetworkManager
+
+systemctl enable bluetooth.service --now
 
 useradd -m -G wheel xhadrines
 
