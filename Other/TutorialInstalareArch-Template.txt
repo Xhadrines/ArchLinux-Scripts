@@ -1,0 +1,106 @@
+setfont ter-132b
+
+fdisk -l
+
+nvme0n1 (1T)
+
+cfdisk /dev/nvme0n1
+
+nvme0n1p1 [EFI System](1G)
+nvme0n1p2 [Linux Swap](10G)
+nvme0n1p3 [Linux filesystem](restul)
+
+fdisk -l
+
+mkfs.fat -F32 /dev/nvme0n1p1
+
+mkswap /dev/nvme0n1p2
+swapon /dev/nvme0n1p2
+
+mkfs.btrfs /dev/nvme0n1p3
+
+mount /dev/nvme0n1p3 /mnt
+
+mkdir /mnt/boot
+mount /dev/nvme0n1p1 /mnt/boot
+
+lsblk
+
+pacstrap -K /mnt base linux linux-firmware sudo vim
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+ln -sf /usr/share/zoneinfo/Europe/Bucharest /etc/localtime
+
+vim /etc/locale.gen
+
+In acest fisier decomenteaza urmatoarele: “en_US.UTF-8 UTF-8”, “en_US ISO-8859-1”, “ro_RO.UTF-8 UTF-8”, “ro_RO ISO-8859-2”
+
+locale-gen
+
+hwclock --systohc
+
+echo LANG=en_US.UTF-8 > /etc/locale.conf
+
+echo "archXhadrines" > /etc/hostname
+
+vim /etc/hosts
+
+In acest fisier introdu urmatoarele:
+127.0.0.1      localhost
+::1            localhost
+127.0.1.1      archXhadrines
+
+passwd
+
+pacman -S efibootmgr
+
+bootctl install
+
+vim /boot/loader/loader.conf
+
+In acest fisier introdu urmatoarele:
+default  arch.conf
+timeout  10
+console-mode max
+editor   no
+
+vim /boot/loader/entries/arch.conf
+
+In acest fisier introdu urmatoarele:
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /initramfs-linux.img
+options root=/dev/nvme0n1p3 rw
+
+sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm
+
+sudo pacman -S xf86-video-amdgpu
+
+sudo pacman -S nvidia nvidia-utils nvidia-settings
+
+pacman -S vulkan-radeon
+
+systemctl enable gdm.service
+
+systemctl enable gdm
+
+pacman -S networkmanager
+
+systemctl enable NetworkManager
+
+useradd -m -G wheel xhadrines
+
+passwd xhadrines
+
+EDITOR=vim visudo
+
+In acest fisier decomenteaza "%wheel ALL=(ALL) ALL"
+
+exit
+
+umount -R /mnt
+
+reboot
