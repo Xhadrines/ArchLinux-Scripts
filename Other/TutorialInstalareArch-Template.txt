@@ -26,7 +26,7 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 lsblk
 
-pacstrap -K /mnt base linux linux-firmware sudo vim
+pacstrap -K /mnt base linux linux-headers linux-firmware sudo vim git
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -84,12 +84,6 @@ sudo pacman -S nvidia nvidia-utils nvidia-settings nvidia-prime
 sudo pacman -S tlp tlp-rdw smartmontools ethtool
 
 sudo pacman -S pipewire pipewire-pulse pipewire-alsa pipewire-jack
-
-vim /etc/tlp.conf
-
-In acest fisier decomenteaza "DEVICES_TO_DISABLE_ON_STARTUP"
-
-sudo tlp start
 
 systemctl --user enable --now pipewire
 
