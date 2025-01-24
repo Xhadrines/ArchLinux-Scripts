@@ -15,7 +15,7 @@ git clone https://github.com/Xhadrines/ArchLinux-Scripts.git
 2. Fă toate scripturile executabile folosind comanda:
 
 ```bash
-chmod +x ArchSetup/install/*.sh
+chmod +x ArchSetup/*.sh
 ```
 
 3. Execută scriptul principal `p1.sh` folosind comanda:

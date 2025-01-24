@@ -1,4 +1,5 @@
 #!/bin/bash
+setfont ter-132b
 
 cat <<EOF
 Pentru ca acest script sa functioneze, trebuie sa creezi manual 3 partitii folosind cfdisk.
