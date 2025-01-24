@@ -48,7 +48,7 @@ echo "Folosind comanda passwd xhadrines setati o parola."
 
 echo "Folosind comanda EDITOR=vim visudo, deschideti fisierul visudo pentru a decomenta linia '%wheel ALL=(ALL) ALL'."
 
-echo "Dupa ce ai terminat iesi din mediul chroot cu comanda exit."
+echo "Dupa ce ai terminat sterge repo-ul cu comanda rm -rf /ArchLinux-Scripts, apoi iesi din mediul chroot cu comanda exit."
 
 echo "Deconecteaza toate parttiile montate cu comanda umount -R /mnt."
 
