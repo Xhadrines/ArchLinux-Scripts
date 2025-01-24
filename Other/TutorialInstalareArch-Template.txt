@@ -75,7 +75,7 @@ linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
 options root=/dev/nvme0n1p3 rw
 
-sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm
+sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-calculator gnome-characters gnome-logs gnome-photos gnome-system-monitor cheese gnome-disk-utility gnome-calendar gnome-font-viewer gnome-screenshot gnome-music gnome-clocks gnome-sound-recorder
 
 sudo pacman -S xf86-video-amdgpu vulkan-radeon
 
