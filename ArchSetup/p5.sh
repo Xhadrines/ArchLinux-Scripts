@@ -1,7 +1,7 @@
 #!/bin/bash
 
-echo "Instalam GNOME si unele aplicatii utilizand comanda sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-calculator gnome-characters gnome-logs gnome-photos gnome-system-monitor cheese gnome-disk-utility gnome-calendar gnome-font-viewer gnome-screenshot gnome-music gnome-clocks gnome-sound-recorder."
-sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-calculator gnome-characters gnome-logs gnome-photos gnome-system-monitor cheese gnome-disk-utility gnome-calendar gnome-font-viewer gnome-screenshot gnome-music gnome-clocks gnome-sound-recorder
+echo "Instalam GNOME si unele aplicatii utilizand comanda sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-calculator gnome-characters gnome-logs gnome-photos gnome-system-monitor cheese gnome-disk-utility gnome-calendar gnome-font-viewer gnome-screenshot gnome-music gnome-clocks gnome-sound-recorder gnome-menus."
+sudo pacman -S gnome-shell gnome-control-center gnome-terminal gdm gnome-tweaks gnome-shell-extensions gnome-browser-connector gnome-calculator gnome-characters gnome-logs gnome-photos gnome-system-monitor cheese gnome-disk-utility gnome-calendar gnome-font-viewer gnome-screenshot gnome-music gnome-clocks gnome-sound-recorder gnome-menus
 
 echo "Instalam driver-ele grafice AMD folosind comanda sudo pacman -S xf86-video-amdgpu vulkan-radeon."
 sudo pacman -S xf86-video-amdgpu vulkan-radeon
