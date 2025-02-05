@@ -79,8 +79,6 @@ sudo pacman -S xf86-video-amdgpu vulkan-radeon
 
 sudo pacman -S nvidia-dkms nvidia-settings nvidia-utils nvidia-prime
 
-sudo pacman -S egl-wayland
-
 sudo pacman -S --needed base-devel xdg-user-dirs xdg-user-dirs-gtk
 
 sudo pacman -S tlp tlp-rdw smartmontools ethtool
@@ -103,7 +101,7 @@ systemctl enable NetworkManager
 
 EDITOR=vim visudo
 
-In acest fisier introdu "%khajiit ALL=(ALL) ALL"
+In acest fisier introdu "%khajiit ALL=(ALL:ALL) ALL"
 
 sudo groupadd khajiit
 
@@ -137,11 +135,13 @@ systemctl enable gdm
 
 >--------------------< PENTRU HYPRLAND (START) >--------------------<
 
-yay -S kitty
+sudo pacman -S egl-wayland
 
 sudo pacman -S xorg-xwayland
 
-yay -S hyprland-git
+sudo pacman -S hyprland
+
+sudo pacman -S kitty dolphin wofi waybar hyprpaper brightnessctl playerctl
 
 vim /etc/mkinitcpio.conf
 
@@ -160,18 +160,26 @@ sudo mkinitcpio -P
 
 reboot now
 
-yay -S dolphin wofi waybar
-
 >--------------------< PENTRU HYPRLAND (SFARSIT) >--------------------<
 
 >--------------------< PENTRU KDE (START) >--------------------<
 
-sudo pacman -S xorg
+sudo pacman -S --needed xorg sddm
 
-sudo pacman -S plasma-meta kde-applications
+sudo pacman -S plasma kde-applications
 
 sudo systemctl enable sddm
 
 >--------------------< PENTRU KDE (SFARSIT) >--------------------<
+
+git clone https://aur.archlinux.org/visual-studio-code-bin.git
+
+makepkg -si
+
+sudo pacman -S zip unzip ttf-font-awesome ttf-jetbrains-mono-nerd 
+
+sudo pacman -S firefox
+
+sudo pacman -S neofetch
 
 systemctl enable bluetooth.service --now
