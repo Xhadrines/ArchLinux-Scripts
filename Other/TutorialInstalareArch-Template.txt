@@ -6,8 +6,8 @@ nvme0n1 (1T)
 
 cfdisk /dev/nvme0n1
 
-nvme0n1p1 [EFI System](1G)
-nvme0n1p2 [Linux Swap](10G)
+nvme0n1p1 [EFI System](2G)
+nvme0n1p2 [Linux Swap](32G)
 nvme0n1p3 [Linux filesystem](restul)
 
 fdisk -l
