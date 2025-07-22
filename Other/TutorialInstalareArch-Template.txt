@@ -176,6 +176,8 @@ git clone https://aur.archlinux.org/visual-studio-code-bin.git
 
 makepkg -si
 
+sudo pacman -S gnome-keyring libsecret seahorse
+
 sudo pacman -S zip unzip ttf-font-awesome ttf-jetbrains-mono-nerd 
 
 sudo pacman -S firefox
