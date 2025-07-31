@@ -1,13 +1,28 @@
 setfont ter-132b
 
+Pentru a dezactivate toate blocarile software
+rfkill unblock all
+
+iwctl
+
+station list
+
+station [NUME de ex. Wlan0] get-networks
+
+station [NUME de ex. Wlan0] connect [NUME_RETEA]
+
+exit
+
+ping google.com
+
 fdisk -l
 
 nvme0n1 (1T)
 
 cfdisk /dev/nvme0n1
 
-nvme0n1p1 [EFI System](2G)
-nvme0n1p2 [Linux Swap](32G)
+nvme0n1p1 [EFI System](1G)
+nvme0n1p2 [Linux Swap](32G [sau cat ram ai])
 nvme0n1p3 [Linux filesystem](restul)
 
 fdisk -l
@@ -21,14 +36,46 @@ mkfs.btrfs /dev/nvme0n1p3
 
 mount /dev/nvme0n1p3 /mnt
 
-mkdir /mnt/boot
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@snapshots
+
+umount /mnt
+
+mount -o compress=zstd,subvol=@ /dev/nvme0n1p3 /mnt
+
+mkdir -p /mnt/{boot,home,.snapshots}
+
+mount -o compress=zstd,subvol=@home /dev/nvme0n1p3 /mnt/home
+mount -o compress=zstd,subvol=@snapshots /dev/nvme0n1p3 /mnt/.snapshots
 mount /dev/nvme0n1p1 /mnt/boot
 
 lsblk
 
-pacstrap -K /mnt base linux linux-headers linux-firmware sudo vim git
+pacstrap -K /mnt base linux linux-headers linux-firmware sudo vim git btrfs-progs
+
+blkid /dev/nvme0n1p3
+Salveaza UUID=UUID_BTRFS_PARTITION
+/dev/nvme0n1p3: UUID="xxxx-xxxx-xxxx-xxxx" TYPE="btrfs" PARTUUID="..."
+
+blkid /dev/nvme0n1p2
+Salveaza UUID=UUID_SWAP_PARTITION
+/dev/nvme0n1p3: UUID="xxxx-xxxx-xxxx-xxxx" TYPE="swap" PARTUUID="..."
+
+blkid /dev/nvme0n1p1
+Salveaza UUID=UUID_EFI_PARTITION
+/dev/nvme0n1p3: UUID="xxxx-xxxx-xxxx-xxxx" TYPE="vfat" PARTUUID="..."
 
 genfstab -U /mnt >> /mnt/etc/fstab
+
+vim /mnt/etc/fstab
+
+Trebuie sa arate ceva de genul (daca nu e modifica)
+UUID=UUID_BTRFS_PARTITION   /            btrfs   rw,relatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=@        0 1
+UUID=UUID_BTRFS_PARTITION   /home        btrfs   rw,relatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=@home    0 2
+UUID=UUID_BTRFS_PARTITION   /.snapshots  btrfs   rw,relatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=@snapshots 0 2
+UUID=UUID_EFI_PARTITION     /boot        vfat    rw,relatime,fmask0022,dmask=0022,codepage=437,iocharset=ascii,shortname=mixed,utf8,errors=remount-ro 0 2
+UUID=UUID_SWAP_PARTITION    none         swap    defaults 0 0
 
 arch-chroot /mnt
 
@@ -73,7 +120,7 @@ In acest fisier introdu urmatoarele:
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
-options root=/dev/nvme0n1p3 rw
+options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@
 
 sudo pacman -S xf86-video-amdgpu vulkan-radeon
 
@@ -90,8 +137,6 @@ systemctl mask power-profiles-deamon.service
 systemctl mask systemd-rfkill.service
 
 systemctl mask systemd-rfkill.socket
-
-systemctl enable tlp
 
 sudo pacman -S pipewire pipewire-pulse pipewire-alsa pipewire-jack
 
@@ -113,7 +158,11 @@ exit
 
 umount -R /mnt
 
-reboot now
+reboot
+
+nmcli device wifi list
+
+nmcli device wifi connect NUME password PAROLA
 
 systemctl --user enable --now pipewire
 
@@ -122,6 +171,29 @@ git clone https://aur.archlinux.org/yay.git
 cd yay
 
 makepkg -si
+
+sudo btrfs subvolume snapshot / /.snapshots/backup-@-initial
+
+sudo btrfs subvolume snapshot /home /.snapshots/backup-@home-initial
+
+P.S. Cele 2 fisiere .conf sunt asemanatoare poti folosi:
+sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-backup-root.conf
+sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-backup-home.conf
+Dupa poti modifica doar continutul de la subvol si titlul
+
+sudo vim /boot/loader/entries/arch-backup-root.conf
+title   Arch Linux Backup Root
+linux   /vmlinuz-linux
+initrd  /initramfs-linux.img
+options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@snapshots/backup-@-initial
+
+sudo vim /boot/loader/entries/arch-backup-home.conf
+title   Arch Linux Backup Home
+linux   /vmlinuz-linux
+initrd  /initramfs-linux.img
+options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@snapshots/backup-@home-initial
+
+reboot
 
 >--------------------< PENTRU GNOME (START) >--------------------<
 
@@ -164,9 +236,7 @@ reboot now
 
 >--------------------< PENTRU KDE (START) >--------------------<
 
-sudo pacman -S --needed xorg sddm
-
-sudo pacman -S plasma kde-applications
+pacman -S --needed xorg sddm plasma plasma-workspace kde-applications 
 
 sudo systemctl enable sddm
 
