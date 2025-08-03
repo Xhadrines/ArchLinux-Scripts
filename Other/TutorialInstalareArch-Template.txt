@@ -132,7 +132,7 @@ sudo pacman -S tlp tlp-rdw smartmontools ethtool
 
 systemctl enable tlp
 
-systemctl mask power-profiles-deamon.service
+systemctl mask power-profiles-daemon.service
 
 systemctl mask systemd-rfkill.service
 
@@ -250,6 +250,6 @@ sudo pacman -S ttf-jetbrains-mono ttf-fira-code ttf-hack ttf-roboto noto-fonts n
 
 sudo pacman -S firefox
 
-sudo pacman -S neofetch
+sudo pacman -S pkgbrowser neofetch
 
 systemctl enable bluetooth.service --now

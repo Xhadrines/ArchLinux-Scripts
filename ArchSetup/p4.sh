@@ -16,7 +16,7 @@ echo "Folosind comanda vim /boot/loader/entries/arch.conf deschideti fisierul ar
 echo "title     Arch Linux"
 echo "linux     /vmlinuz-linux"
 echo "initrd    /initramfs-linux.img"
-echo "options   root=/dev/nvme0n1p3 rw"
+echo "options   root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@"
 
 echo "Dupa ce ai terminat executa scriptul p5.sh cu comanda:"
 echo "./p5.sh"
