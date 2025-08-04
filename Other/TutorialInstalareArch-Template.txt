@@ -251,6 +251,8 @@ sudo pacman -S kcalc kalarm spectacle kate kamoso gwenview vlc ark plasma-system
 
 sudo pacman -S gnupq kwallet kwalletmanager
 
+gpg --full-generate-key
+
 sudo pacman -S cups print-manager system-config-printer
 sudo systemctl enable --now cups.service
 
