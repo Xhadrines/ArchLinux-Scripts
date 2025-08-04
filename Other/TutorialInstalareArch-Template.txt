@@ -269,3 +269,12 @@ sudo pacman -S ttf-jetbrains-mono ttf-fira-code ttf-hack ttf-roboto noto-fonts n
 sudo pacman -S firefox
 
 systemctl enable bluetooth.service --now
+
+sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-cli.conf
+
+sudo vim /boot/loader/entries/arch-backup.conf
+title   Arch Linux (CLI)
+linux   /vmlinuz-linux
+initrd  /initramfs-linux.img
+options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@ systemd.unit=multi-user.target
+
