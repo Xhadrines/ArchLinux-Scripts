@@ -249,7 +249,7 @@ sudo systemctl enable firewalld.service --now
 
 sudo pacman -S kcalc kalarm spectacle kate kamoso gwenview vlc ark plasma-systemmonitor okular libreoffice-fresh
 
-sudo pacman -S kwallet kwalletmanager
+sudo pacman -S gnupq kwallet kwalletmanager
 
 sudo pacman -S cups print-manager system-config-printer
 sudo systemctl enable --now cups.service
