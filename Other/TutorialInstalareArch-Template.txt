@@ -52,7 +52,7 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 lsblk
 
-pacstrap -K /mnt base linux linux-headers linux-firmware sudo vim git btrfs-progs
+pacstrap -K /mnt base linux linux-headers linux-firmware sudo vim git btrfs-progs htop fastfetch
 
 blkid /dev/nvme0n1p3
 Salveaza UUID=UUID_BTRFS_PARTITION
@@ -78,6 +78,20 @@ UUID=UUID_EFI_PARTITION     /boot        vfat    rw,relatime,fmask0022,dmask=002
 UUID=UUID_SWAP_PARTITION    none         swap    defaults 0 0
 
 arch-chroot /mnt
+
+mount -a
+
+vim /etc/pacman.conf
+
+decomenteaza
+Color
+
+modifica
+ParallelDownloads = 10
+
+adauga sau decomenteaza
+[multilib]
+Include = /etc/pacman.d/mirrorlist
 
 ln -sf /usr/share/zoneinfo/Europe/Bucharest /etc/localtime
 
@@ -172,26 +186,17 @@ cd yay
 
 makepkg -si
 
-sudo btrfs subvolume snapshot / /.snapshots/backup-@-initial
-
-sudo btrfs subvolume snapshot /home /.snapshots/backup-@home-initial
+sudo btrfs subvolume snapshot / /.snapshots/backup
 
 P.S. Cele 2 fisiere .conf sunt asemanatoare poti folosi:
-sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-backup-root.conf
-sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-backup-home.conf
+sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-backup.conf
 Dupa poti modifica doar continutul de la subvol si titlul
 
-sudo vim /boot/loader/entries/arch-backup-root.conf
-title   Arch Linux Backup Root
+sudo vim /boot/loader/entries/arch-backup.conf
+title   Arch Linux (BACKUP)
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
-options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@snapshots/backup-@-initial
-
-sudo vim /boot/loader/entries/arch-backup-home.conf
-title   Arch Linux Backup Home
-linux   /vmlinuz-linux
-initrd  /initramfs-linux.img
-options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@snapshots/backup-@home-initial
+options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@snapshots/backup
 
 reboot
 
@@ -236,9 +241,20 @@ reboot now
 
 >--------------------< PENTRU KDE (START) >--------------------<
 
-pacman -S --needed xorg sddm plasma plasma-workspace kde-applications 
-
+sudo pacman -S plasma-desktop plasma-pa plasma-nm powerdevil upower konsole dolphin partitionmanager systemsettings discover flatpak sddm xdg-desktop-portal xdg-desktop-portal-kde
 sudo systemctl enable sddm
+
+sudo pacman -S plasma-firewall firewalld
+sudo systemctl enable firewalld.service --now
+
+sudo pacman -S kcalc kalarm spectacle kate kamoso gwenview vlc ark plasma-systemmonitor okular libreoffice-fresh
+
+sudo pacman -S kwallet kwalletmanager
+
+sudo pacman -S cups print-manager system-config-printer
+sudo systemctl enable --now cups.service
+
+sudo pacman -S sane skanlite
 
 >--------------------< PENTRU KDE (SFARSIT) >--------------------<
 
@@ -249,7 +265,5 @@ makepkg -si
 sudo pacman -S ttf-jetbrains-mono ttf-fira-code ttf-hack ttf-roboto noto-fonts noto-fonts-emoji ttf-font-awesome noto-fonts-extra
 
 sudo pacman -S firefox
-
-sudo pacman -S pkgbrowser neofetch
 
 systemctl enable bluetooth.service --now
