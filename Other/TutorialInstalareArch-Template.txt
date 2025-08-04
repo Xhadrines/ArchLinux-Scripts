@@ -244,7 +244,7 @@ reboot now
 sudo pacman -S plasma-desktop plasma-pa plasma-nm powerdevil upower konsole dolphin partitionmanager systemsettings discover flatpak sddm xdg-desktop-portal xdg-desktop-portal-kde
 sudo systemctl enable sddm
 
-sudo pacman -S plasma-firewall firewalld
+sudo pacman -S plasma-firewall firewalld bluedevil
 sudo systemctl enable firewalld.service --now
 
 sudo pacman -S kcalc kalarm spectacle kate kamoso gwenview vlc ark plasma-systemmonitor okular libreoffice-fresh
