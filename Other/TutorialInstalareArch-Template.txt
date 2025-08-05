@@ -272,8 +272,6 @@ sudo pacman -S firefox steam
 
 sudo pacman -S speech-dispatcher
 
-systemctl --user enable speech-dispatcher.service
-
 systemctl enable bluetooth.service --now
 
 sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-cli.conf
