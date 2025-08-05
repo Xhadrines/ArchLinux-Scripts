@@ -270,6 +270,10 @@ sudo pacman -S ttf-jetbrains-mono ttf-fira-code ttf-hack ttf-roboto noto-fonts n
 
 sudo pacman -S firefox steam
 
+sudo pacman -S speech-dispatcher
+
+systemctl --user enable speech-dispatcher.service
+
 systemctl enable bluetooth.service --now
 
 sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-cli.conf
