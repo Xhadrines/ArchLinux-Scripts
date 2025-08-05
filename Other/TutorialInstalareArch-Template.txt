@@ -243,7 +243,7 @@ reboot now
 
 >--------------------< PENTRU KDE (START) >--------------------<
 
-sudo pacman -S plasma-desktop plasma-pa plasma-nm powerdevil upower konsole dolphin partitionmanager systemsettings discover flatpak sddm xdg-desktop-portal xdg-desktop-portal-kde
+sudo pacman -S plasma-desktop plasma-pa plasma-nm powerdevil upower konsole dolphin partitionmanager systemsettings discover flatpak sddm xdg-desktop-portal xdg-desktop-portal-kde kscreenlocker
 sudo systemctl enable sddm
 
 sudo pacman -S plasma-firewall firewalld bluedevil
