@@ -270,6 +270,8 @@ sudo pacman -S ttf-jetbrains-mono ttf-fira-code ttf-hack ttf-roboto noto-fonts n
 
 sudo pacman -S firefox steam discord
 
+sudo pacman -S dkms
+
 sudo pacman -S speech-dispatcher
 
 systemctl enable bluetooth.service --now
