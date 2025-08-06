@@ -274,6 +274,12 @@ sudo pacman -S speech-dispatcher
 
 systemctl enable bluetooth.service --now
 
+yay -S xpadneo-dkms-git
+
+sudo modprobe xpadneo
+
+systemctl enable bluetooth.service --now
+
 sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-cli.conf
 
 sudo vim /boot/loader/entries/arch-backup.conf
