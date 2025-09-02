@@ -284,3 +284,52 @@ linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
 options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@ systemd.unit=multi-user.target
 
+>--------------------< PENTRU SSD IN PLUS (START) >--------------------<
+
+lsblk
+
+sudo cfdisk /dev/nvme1n1
+
+nvme0n1p1 [Linux filesystem](tot)
+
+lsblk
+
+sudo mkfs.btrfs -f /dev/nvme1n1p1
+
+sudo mkdir -p /mnt/nvme
+
+sudo mount /dev/nvme1n1p1 /mnt/nvme
+
+sudo btrfs subvolume create /mnt/nvme/@storage
+
+sudo mkdir -p /mnt/storage
+
+sudo mount -o compress=zstd,subvol=@storage /dev/nvme1n1p1 /mnt/storage
+
+lsblk
+
+sudo umount /mnt/nvme
+
+sudo rmdir /mnt/nvme
+
+sudo umount /mnt/storage
+
+sudo mkdir -p /mnt/storage
+
+sudo blkid /dev/nvme1n1p1
+Salveaza UUID=UUID_BTRFS_PARTITION
+/dev/nvme1n1p1: UUID="xxxx-xxxx-xxxx-xxxx" TYPE="btrfs" PARTUUID="..."
+
+sudo vim /etc/fstab 
+
+Adauga
+# /dev/nvme1n1p1
+UUID=UUID_BTRFS_PARTITION    /mnt/storage    btrfs    rw,relatime,compress=zstd:3,ssd,discard=async,space_cache=v2,subvol=@storage    0 2
+
+sudo systemctl daemon-reload
+
+sudo mount -a
+
+lsblk
+
+>--------------------< PENTRU SSD IN PLUS (SFARSIT) >--------------------<
