@@ -278,7 +278,7 @@ systemctl enable bluetooth.service --now
 
 sudo cp /boot/loader/entries/arch.conf /boot/loader/entries/arch-cli.conf
 
-sudo vim /boot/loader/entries/arch-backup.conf
+sudo vim /boot/loader/entries/arch-cli.conf
 title   Arch Linux (CLI)
 linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
