@@ -288,6 +288,8 @@ linux   /vmlinuz-linux
 initrd  /initramfs-linux.img
 options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@ systemd.unit=multi-user.target
 
+sudo pacman -S virtualbox virtualbox-host-modules-arch
+
 >--------------------< PENTRU SSD IN PLUS (START) >--------------------<
 
 lsblk
