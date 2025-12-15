@@ -52,7 +52,7 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 lsblk
 
-pacstrap -K /mnt base linux linux-headers linux-firmware sudo vim git btrfs-progs htop fastfetch
+pacstrap -K /mnt base linux linux-headers linux-firmware sudo vim git wget btrfs-progs htop fastfetch
 
 blkid /dev/nvme0n1p3
 Salveaza UUID=UUID_BTRFS_PARTITION
