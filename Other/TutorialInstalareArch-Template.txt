@@ -290,6 +290,12 @@ options root=UUID=UUID_BTRFS_PARTITION rw rootflags=subvol=@ systemd.unit=multi-
 
 sudo pacman -S virtualbox virtualbox-host-modules-arch
 
+git clone https://aur.archlinux.org/ventoy-bin.git
+
+cd ventoy-bin
+
+makepkg -si
+
 >--------------------< PENTRU SSD IN PLUS (START) >--------------------<
 
 lsblk
