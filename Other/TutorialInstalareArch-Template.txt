@@ -146,9 +146,11 @@ sudo pacman -S vulkan-tools lib32-nvidia-utils lib32-mesa lib32-vulkan-radeon li
 
 sudo pacman -S --needed base-devel xdg-user-dirs xdg-user-dirs-gtk
 
-sudo pacman -S tlp tlp-rdw smartmontools ethtool
+sudo pacman -S tlp tlp-rdw tlp-pd smartmontools ethtool
 
 systemctl enable tlp
+
+systemctl enable --now tlp-pd.service
 
 systemctl mask power-profiles-daemon.service
 
